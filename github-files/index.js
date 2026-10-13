@@ -44,9 +44,8 @@ function verifySecret(inputPlain, storedPassword) {
   return storedPassword === hashedInput || storedPassword === inputPlain;
 }
 
-// ====================================================================
-// Authentication Routes (Step 4 & Bonus Challenge)
-// ====================================================================
+
+// Authentication Routes
 
 // Render signup form
 app.get("/signup", (req, res) => {
@@ -220,46 +219,12 @@ app.post("/account", async (req, res) => {
   }
 });
 
-// Database Table Viewer Route
-app.get(["/tables", "/db"], async (req, res) => {
-  try {
-    const usersResult = await pool.query("SELECT * FROM users ORDER BY user_id ASC");
-    const blogsResult = await pool.query("SELECT * FROM blogs ORDER BY blog_id ASC");
 
-    let queryResult = null;
-    let queryError = null;
-    const customSql = req.query.sql ? req.query.sql.trim() : null;
 
-    if (customSql) {
-      if (!customSql.toLowerCase().startsWith("select")) {
-        queryError = "Only SELECT queries are permitted in the web viewer console.";
-      } else {
-        try {
-          queryResult = await pool.query(customSql);
-        } catch (qErr) {
-          queryError = qErr.message;
-        }
-      }
-    }
+// Blog Processes
 
-    res.render("tables", {
-      users: usersResult.rows,
-      blogs: blogsResult.rows,
-      customSql: customSql,
-      queryResult: queryResult,
-      queryError: queryError
-    });
-  } catch (err) {
-    console.error("Error loading tables view:", err.message);
-    res.status(500).send("Database error: " + err.message);
-  }
-});
 
-// ====================================================================
-// Blog Operations (Steps 5, 6, 7 & 8)
-// ====================================================================
-
-// Step 6: Post Viewing (Retrieve all posts from PostgreSQL)
+// Step 6: Post Viewing
 app.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM blogs ORDER BY date_created DESC");
@@ -374,7 +339,7 @@ app.post("/posts/:id/edit", async (req, res) => {
   }
 });
 
-// Step 8: Post Deletion via SQL DELETE (Enforce creator ownership check)
+// Step 8: Post Deletion via SQL DELETE 
 app.post("/posts/:id/delete", async (req, res) => {
   if (!req.session.user) {
     return res.redirect("/signin");
@@ -409,9 +374,7 @@ app.use((req, res) => {
 
 // Startup check & server listener
 app.listen(PORT, async () => {
-  console.log(`====================================================`);
-  console.log(`  🚀 CS 312 BlogDB Server running at http://localhost:${PORT}`);
-  console.log(`====================================================`);
+  console.log(`   CS 312 BlogDB Server running at http://localhost:${PORT}`);
 
   // Test database connection
   try {
@@ -421,5 +384,4 @@ app.listen(PORT, async () => {
     console.warn(`  [Notice] PostgreSQL connection notice: ${err.message}`);
     console.warn(`  Please ensure PostgreSQL is running and database/schema.sql is executed in pgAdmin.`);
   }
-  console.log(`====================================================`);
 });
