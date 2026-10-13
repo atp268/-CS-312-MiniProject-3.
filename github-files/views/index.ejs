@@ -10,16 +10,15 @@
 
   <!-- Navigation Bar -->
   <nav class="navbar">
-    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <a href="/" class="nav-brand">BlogDB</a>
     <div class="nav-links">
-      <a href="/tables" class="btn btn-nav" style="background-color: #16a34a; border-color: #15803d;">📊 View SQL Tables</a>
       <% if (user) { %>
         <span class="user-greeting">Signed in as <strong><%= user.name %></strong> (<%= user.user_id %>)</span>
-        <a href="/account" class="btn btn-nav">Account ⚙️</a>
-        <a href="/signout" class="btn btn-nav">Sign Out 🚪</a>
+        <a href="/account" class="btn btn-nav">Account</a>
+        <a href="/signout" class="btn btn-nav">Sign Out</a>
       <% } else { %>
-        <a href="/signin" class="btn btn-nav">Sign In 🔑</a>
-        <a href="/signup" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Sign Up ✨</a>
+        <a href="/signin" class="btn btn-nav">Sign In</a>
+        <a href="/signup" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Sign Up</a>
       <% } %>
     </div>
   </nav>
@@ -65,7 +64,7 @@
             ></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Publish to Database 🚀</button>
+          <button type="submit" class="btn btn-primary">Publish to Database</button>
         </form>
       </section>
     <% } else { %>
@@ -107,14 +106,14 @@
             <!-- Steps 7 & 8: Edit/Delete buttons ONLY visible to the post creator -->
             <% if (user && user.user_id === post.creator_user_id) { %>
               <div class="post-actions">
-                <a href="/posts/<%= post.blog_id %>/edit" class="btn btn-edit">Edit ✏️</a>
+                <a href="/posts/<%= post.blog_id %>/edit" class="btn btn-edit">Edit</a>
                 <form action="/posts/<%= post.blog_id %>/delete" method="POST" style="margin: 0;">
                   <button 
                     type="submit" 
                     class="btn btn-delete" 
                     onclick="return confirm('Are you sure you want to permanently delete this post from PostgreSQL?');"
                   >
-                    Delete 🗑️
+                    Delete
                   </button>
                 </form>
               </div>
