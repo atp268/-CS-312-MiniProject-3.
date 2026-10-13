@@ -1,7 +1,4 @@
-﻿-- ====================================================================
--- CS 312 Mini-Project-3: PostgreSQL Database Schema & Seed Script
--- Database Name: BlogDB
--- ====================================================================
+
 
 -- 1. Create Users Table
 CREATE TABLE IF NOT EXISTS users (
@@ -24,11 +21,6 @@ CREATE TABLE IF NOT EXISTS blogs (
         ON UPDATE CASCADE
 );
 
--- ====================================================================
--- 3. Initial Seed Data (At least 3 users & 5 blog posts)
--- ====================================================================
-
--- Seed Users:
 -- Passwords below are MD5 hashes of:
 --   'password123'  -> 482c811da5d5b4bc6d497ffa98491e38
 --   'securePass456' -> b68097d74f26dbcae324d081f2674e27
