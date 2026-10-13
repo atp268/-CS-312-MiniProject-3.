@@ -10,7 +10,7 @@ const pool = require("./db");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Dynamic template & asset path resolver (supports nested and flat layouts)
+// Dynamic template & asset path resolver
 const viewDir = fs.existsSync(path.join(__dirname, "views")) ? path.join(__dirname, "views") : __dirname;
 const publicDir = fs.existsSync(path.join(__dirname, "public")) ? path.join(__dirname, "public") : __dirname;
 
