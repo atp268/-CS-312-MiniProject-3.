@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Post - BlogDB</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <div class="nav-links">
+      <% if (user) { %>
+        <span class="user-greeting">Signed in as <strong><%= user.name %></strong></span>
+        <a href="/" class="btn btn-nav">&larr; Back to Feed</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>Edit Blog Post</h1>
+      <p class="subtitle">Update your post in PostgreSQL</p>
+    </header>
+
+    <div class="card">
+      <h2>Modifying Post #<%= post.blog_id %></h2>
+
+      <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+        <div class="alert alert-danger"><%= errorMsg %></div>
+      <% } %>
+
+      <form action="/posts/<%= post.blog_id %>/edit" method="POST">
+        <div class="form-group">
+          <label for="title">Blog Title:</label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            value="<%= post.title %>" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="body">Blog Content:</label>
+          <textarea 
+            id="body" 
+            name="body" 
+            rows="7" 
+            required
+          ><%= post.body %></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary">Save Changes 💾</button>
+          <a href="/" class="btn btn-secondary" style="margin-left: 8px;">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+    <footer>
+      <p><a href="/" style="color: #2980b9; text-decoration: none;">&larr; Back to Feed</a></p>
+    </footer>
+  </div>
+
+</body>
+</html>

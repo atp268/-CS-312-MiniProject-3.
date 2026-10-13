@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - BlogDB</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <div class="nav-links">
+      <a href="/signup" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Sign Up ✨</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card auth-card">
+      <h2>Sign In to Your Account</h2>
+
+      <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+        <div class="alert alert-danger"><%= errorMsg %></div>
+      <% } %>
+      <% if (typeof successMsg !== 'undefined' && successMsg) { %>
+        <div class="alert alert-success"><%= successMsg %></div>
+      <% } %>
+
+      <form action="/signin" method="POST">
+        <div class="form-group">
+          <label for="user_id">User ID (Username):</label>
+          <input 
+            type="text" 
+            id="user_id" 
+            name="user_id" 
+            placeholder="Enter your user ID" 
+            value="<%= typeof prevUserId !== 'undefined' ? prevUserId : '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter your password" 
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account yet? <a href="/signup">Sign Up here</a>.
+      </div>
+    </div>
+
+    <footer>
+      <p><a href="/" style="color: #2980b9; text-decoration: none;">&larr; Back to Home Feed</a></p>
+    </footer>
+  </div>
+
+</body>
+</html>

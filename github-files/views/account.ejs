@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings - BlogDB</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <div class="nav-links">
+      <a href="/" class="btn btn-nav">&larr; Back to Feed</a>
+      <a href="/signout" class="btn btn-nav">Sign Out 🚪</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>Account Settings</h1>
+      <p class="subtitle">Bonus Challenge: Manage your credentials</p>
+    </header>
+
+    <div class="card auth-card" style="max-width: 520px;">
+      <h2>Update Profile & Credentials</h2>
+
+      <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+        <div class="alert alert-danger"><%= errorMsg %></div>
+      <% } %>
+      <% if (typeof successMsg !== 'undefined' && successMsg) { %>
+        <div class="alert alert-success"><%= successMsg %></div>
+      <% } %>
+
+      <form action="/account" method="POST">
+        <div class="form-group">
+          <label for="name">Display Name:</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="<%= user.name %>" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="new_user_id">User ID (Username):</label>
+          <input 
+            type="text" 
+            id="new_user_id" 
+            name="new_user_id" 
+            value="<%= user.user_id %>" 
+            required
+          >
+          <small style="color: #666; font-size: 12px; display: block; margin-top: 4px;">
+            Note: Updating your User ID will automatically update ownership across all your posts.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="new_password">New Password (leave blank to keep current):</label>
+          <input 
+            type="password" 
+            id="new_password" 
+            name="new_password" 
+            placeholder="Enter new password (optional)"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Account Changes</button>
+      </form>
+    </div>
+
+    <footer>
+      <p><a href="/" style="color: #2980b9; text-decoration: none;">&larr; Back to Home Feed</a></p>
+    </footer>
+  </div>
+
+</body>
+</html>

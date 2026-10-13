@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - BlogDB</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <div class="nav-links">
+      <a href="/signin" class="btn btn-nav">Sign In 🔑</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card auth-card">
+      <h2>Create New Account</h2>
+
+      <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+        <div class="alert alert-danger"><%= errorMsg %></div>
+      <% } %>
+
+      <form action="/signup" method="POST">
+        <div class="form-group">
+          <label for="user_id">User ID (Username):</label>
+          <input 
+            type="text" 
+            id="user_id" 
+            name="user_id" 
+            placeholder="e.g. jsmith24" 
+            value="<%= typeof prevUserId !== 'undefined' ? prevUserId : '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="name">Full Name:</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            placeholder="e.g. John Smith" 
+            value="<%= typeof prevName !== 'undefined' ? prevName : '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter secure password" 
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="/signin">Sign In here</a>.
+      </div>
+    </div>
+
+    <footer>
+      <p><a href="/" style="color: #2980b9; text-decoration: none;">&larr; Back to Home Feed</a></p>
+    </footer>
+  </div>
+
+</body>
+</html>

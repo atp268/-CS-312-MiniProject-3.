@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogDB - CS 312 Mini-Project-3</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">📝 BlogDB</a>
+    <div class="nav-links">
+      <a href="/tables" class="btn btn-nav" style="background-color: #16a34a; border-color: #15803d;">📊 View SQL Tables</a>
+      <% if (user) { %>
+        <span class="user-greeting">Signed in as <strong><%= user.name %></strong> (<%= user.user_id %>)</span>
+        <a href="/account" class="btn btn-nav">Account ⚙️</a>
+        <a href="/signout" class="btn btn-nav">Sign Out 🚪</a>
+      <% } else { %>
+        <a href="/signin" class="btn btn-nav">Sign In 🔑</a>
+        <a href="/signup" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Sign Up ✨</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>PostgreSQL Blog Feed</h1>
+      <p class="subtitle">CS 312 Mini-Project-3 with Authentication & Database Persistence</p>
+    </header>
+
+    <!-- Feedback messages -->
+    <% if (typeof successMsg !== 'undefined' && successMsg) { %>
+      <div class="alert alert-success"><%= successMsg %></div>
+    <% } %>
+    <% if (typeof errorMsg !== 'undefined' && errorMsg) { %>
+      <div class="alert alert-danger"><%= errorMsg %></div>
+    <% } %>
+
+    <!-- Step 5: Post Creation Section -->
+    <% if (user) { %>
+      <section class="card">
+        <h2>Create a New Blog Post</h2>
+        <form action="/posts" method="POST">
+          <div class="form-group">
+            <label for="title">Blog Title:</label>
+            <input 
+              type="text" 
+              id="title" 
+              name="title" 
+              placeholder="Enter a descriptive post title..." 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="body">Blog Content:</label>
+            <textarea 
+              id="body" 
+              name="body" 
+              rows="5" 
+              placeholder="Write your article body here..." 
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Publish to Database 🚀</button>
+        </form>
+      </section>
+    <% } else { %>
+      <div class="alert alert-info" style="text-align: center;">
+        <p style="margin: 0 0 10px 0;">Want to share your thoughts? Please sign in or create an account to publish and manage your blogs.</p>
+        <a href="/signin" class="btn btn-primary" style="margin-right: 8px;">Sign In</a>
+        <a href="/signup" class="btn btn-secondary">Sign Up</a>
+      </div>
+    <% } %>
+
+    <hr>
+
+    <!-- Step 6: Post Viewing Feed -->
+    <section>
+      <h2>Published Articles (<%= posts.length %>)</h2>
+
+      <% if (posts.length === 0) { %>
+        <div class="empty-state">
+          <p>No blog posts found in PostgreSQL. Be the first to create one!</p>
+        </div>
+      <% } else { %>
+        <% posts.forEach(function(post) { %>
+          <article class="post-card">
+            <div class="post-header">
+              <h3 class="post-title"><%= post.title %></h3>
+              <div class="post-meta">
+                By <strong><%= post.creator_name %></strong> 
+                <span>(<%= post.creator_user_id %>)</span>
+                <% if (user && user.user_id === post.creator_user_id) { %>
+                  <span class="badge-owner">Your Post</span>
+                <% } %>
+                &bull; 
+                <span><%= new Date(post.date_created).toLocaleString() %></span>
+              </div>
+            </div>
+
+            <div class="post-content"><%= post.body %></div>
+
+            <!-- Steps 7 & 8: Edit/Delete buttons ONLY visible to the post creator -->
+            <% if (user && user.user_id === post.creator_user_id) { %>
+              <div class="post-actions">
+                <a href="/posts/<%= post.blog_id %>/edit" class="btn btn-edit">Edit ✏️</a>
+                <form action="/posts/<%= post.blog_id %>/delete" method="POST" style="margin: 0;">
+                  <button 
+                    type="submit" 
+                    class="btn btn-delete" 
+                    onclick="return confirm('Are you sure you want to permanently delete this post from PostgreSQL?');"
+                  >
+                    Delete 🗑️
+                  </button>
+                </form>
+              </div>
+            <% } %>
+          </article>
+        <% }); %>
+      <% } %>
+    </section>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> CS 312 BlogDB &bull; Node.js, Express, EJS & PostgreSQL</p>
+    </footer>
+  </div>
+
+</body>
+</html>

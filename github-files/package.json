@@ -1,0 +1,26 @@
+﻿{
+  "name": "cs312-miniproject-3",
+  "version": "1.0.0",
+  "description": "Enhanced Blog Web App with PostgreSQL and Authentication (CS 312 Mini-Project-3)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test_app.js"
+  },
+  "keywords": [
+    "blog",
+    "postgresql",
+    "express",
+    "ejs",
+    "authentication"
+  ],
+  "author": "Anthony Pagnotti",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "pg": "^8.13.0"
+  }
+}
